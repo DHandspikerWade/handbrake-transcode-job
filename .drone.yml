@@ -1,0 +1,31 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: Build & publish  
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_username
+    password: 
+      from_secret: docker_password
+    registry: registry.hub.docker.com
+    repo: handspiker2/handbrake-transcode-job
+    tags: latest
+    dry_run: false
+  when:
+    branch:
+    - master
+
+# Just test build branches
+- name: Build  
+  image: plugins/docker
+  settings:
+    repo: handspiker2/handbrake-transcode-job
+    tags: latest
+    dry_run: true
+  when:
+    branch:
+      exclude:
+      - master
