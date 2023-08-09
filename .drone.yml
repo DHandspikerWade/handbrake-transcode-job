@@ -16,7 +16,7 @@ steps:
     dry_run: false
   when:
     branch:
-    - master
+    - main
 
 # Just test build branches
 - name: Build  
@@ -28,4 +28,4 @@ steps:
   when:
     branch:
       exclude:
-      - master
+      - main
