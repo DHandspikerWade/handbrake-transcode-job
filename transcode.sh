@@ -16,14 +16,21 @@ if [ -z "$OUTPUT_FILE" ]; then
     exit 1
 fi
 
-git clone https://github.com/DHandspikerWade/handbrake-presets.git /storage/presets
+# Allow presets to come from outside but still provide my usuals
+if [ ! -d /storage/presets ]; then
+    echo "INFO: No presets provided. Downloading Devin's presets."
+    mkdir -p /storage/presets
+    git clone --depth 1 https://github.com/DHandspikerWade/handbrake-presets.git /tmp/presets
+    cp /tmp/presets/*.json /storage/presets/
+    rm -rf /tmp/presets
+fi
 
+echo "INFO: Starting Handbrake"
 HandBrakeCLI --preset-import-file  /storage/presets/*.json -Z "$PRESET_NAME" ${HANDBRAKE_ARGS:-""} -i "/input/$INPUT_FILE" -o /storage/transcoding
 
 
 output_path=$(dirname "$OUTPUT_FILE")
-echo "Creating: /output/$output_path"
+echo "INFO: Creating /output/$output_path"
 mkdir -p /output/"$output_path"
-echo "moving to: /output/$OUTPUT_FILE"
+echo "INFO: Moving tempfile to /output/$OUTPUT_FILE"
 mv /storage/transcoding /output/"$OUTPUT_FILE"
-echo Done
