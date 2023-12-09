@@ -45,3 +45,5 @@ steps:
       exclude:
       - main
       - test-build
+    event:
+    - push
