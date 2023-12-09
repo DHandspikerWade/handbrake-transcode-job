@@ -48,9 +48,8 @@ RUN \
 
 ENV HANDBRAKE_GIT_TAG '1.7.1'
 RUN \
-    git clone https://github.com/HandBrake/HandBrake.git /HandBrake \
+    git clone --depth 1 https://github.com/HandBrake/HandBrake.git -b "$HANDBRAKE_GIT_TAG" /HandBrake \
     && cd /HandBrake \
-    && git checkout "tags/$HANDBRAKE_GIT_TAG" \
     && ./configure --launch-jobs=2 --launch --disable-gtk \
     && cp -v /HandBrake/build/HandBrakeCLI /usr/local/bin/HandBrakeCLI \
     && HandBrakeCLI --version \
