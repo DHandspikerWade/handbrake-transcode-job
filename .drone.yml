@@ -17,6 +17,22 @@ steps:
     branch:
     - main
 
+- name: Build & publish (Test build)
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_username
+    password: 
+      from_secret: docker_password
+    repo: handspiker2/handbrake-transcode-job
+    tags: test-build
+    dry_run: false
+  when:
+    event:
+    - promote
+    target:
+    - test-build
+
 # Just test build branches
 - name: Build  
   image: plugins/docker
@@ -28,3 +44,4 @@ steps:
     branch:
       exclude:
       - main
+      - test-build
