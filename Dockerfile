@@ -3,7 +3,6 @@ FROM debian:12-slim
 RUN \
     apt-get update -q \
     && apt-get install -y \
-        git \
         curl \
         appstream \
         autoconf \
@@ -46,7 +45,7 @@ RUN \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-ENV HANDBRAKE_GIT_TAG '1.7.1'
+ENV HANDBRAKE_GIT_TAG '1.7.2'
 RUN \
     git clone --depth 1 https://github.com/HandBrake/HandBrake.git -b "$HANDBRAKE_GIT_TAG" /HandBrake \
     && cd /HandBrake \
