@@ -45,7 +45,7 @@ RUN \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-ENV HANDBRAKE_GIT_TAG '1.7.2'
+ENV HANDBRAKE_GIT_TAG '1.7.3'
 RUN \
     git clone --depth 1 https://github.com/HandBrake/HandBrake.git -b "$HANDBRAKE_GIT_TAG" /HandBrake \
     && cd /HandBrake \
