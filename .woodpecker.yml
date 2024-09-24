@@ -1,0 +1,14 @@
+steps:
+# Just test build branches
+- name: Build  
+  image: woodpeckerci/plugin-docker-buildx
+  settings:
+    repo: handspiker2/handbrake-transcode-job
+    tags: latest
+    auto_labels: false
+    platforms: linux/amd64,linux/arm64/v8
+    dry_run: true
+  when:
+    branch:
+      exclude:
+      - main
