@@ -12,12 +12,3 @@ steps:
     branch:
       exclude:
       - main
-  backend_options:
-      kubernetes:
-        resources:
-          requests:
-            memory: 512Mi
-            cpu: 1500m
-          limits:
-            memory: 2Gi
-            cpu: 1500m
