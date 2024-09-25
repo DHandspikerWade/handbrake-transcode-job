@@ -3,10 +3,6 @@ matrix:
     - amd64
     - arm64
 
-
-labels:
-  platform: linux/${platform}
-
 steps:
 # Just test build branches
 - name: Build  
