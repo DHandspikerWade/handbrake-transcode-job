@@ -1,3 +1,12 @@
+matrix:
+  platform:
+    - amd64
+    - arm64
+
+
+labels:
+  platform: linux/${platform}
+
 steps:
 # Just test build branches
 - name: Build  
@@ -6,7 +15,7 @@ steps:
     repo: handspiker2/handbrake-transcode-job
     tags: latest
     auto_labels: false
-    platforms: linux/amd64,linux/arm64/v8
+    platforms: linux/${platform}
     dry_run: true
   when:
     branch:
