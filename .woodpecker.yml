@@ -1,19 +1,38 @@
-matrix:
-  platform:
-    - amd64
-    - arm64
+variables:
+  &handbrake_version: 1.8.2
 
 steps:
 # Just test build branches
-- name: Build  
+- name: Build
   image: woodpeckerci/plugin-docker-buildx
   settings:
     repo: handspiker2/handbrake-transcode-job
-    tags: latest
+    tags:
+      - latest
+      - *handbrake_version
     auto_labels: false
-    platforms: linux/${platform}
+    platforms: linux/amd64
     dry_run: true
   when:
     branch:
       exclude:
       - main
+    event: push
+
+- name: Build & publish
+  image: woodpeckerci/plugin-docker-buildx
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: handspiker2/handbrake-transcode-job
+    tags:
+      - latest
+      - *handbrake_version
+    dry_run: false
+    platforms: linux/amd64
+  when:
+    branch:
+    - main
+    event: [push, manual]
