@@ -45,14 +45,15 @@ RUN \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-ENV HANDBRAKE_GIT_TAG 'master'
+ARG HANDBRAKE_GIT_TAG 'master'
 RUN \
     git clone --depth 1 https://github.com/HandBrake/HandBrake.git -b "$HANDBRAKE_GIT_TAG" /HandBrake \
     && cd /HandBrake \
     && ./configure --launch-jobs=2 --launch --disable-gtk \
     && cp -v /HandBrake/build/HandBrakeCLI /usr/local/bin/HandBrakeCLI \
     && HandBrakeCLI --version \
-    && rm -rf /HandBrake
+    && rm -rf /HandBrake \
+    && echo "$HANDBRAKE_GIT_TAG" > /HANDBRAKE_GIT_TAG
 
 COPY transcode.sh /
 RUN chmod +x /transcode.sh
