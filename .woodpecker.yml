@@ -1,5 +1,5 @@
 variables:
-  &handbrake_version: 1.8.2
+  - &handbrake_version 1.8.2
 
 steps:
 # Just test build branches
