@@ -5,13 +5,15 @@ steps:
 # Just test build branches
 - name: Build
   image: woodpeckerci/plugin-docker-buildx
+  environment:
+    HANDBRAKE_GIT_TAG: *handbrake_version
   settings:
     repo: handspiker2/handbrake-transcode-job
     tags:
       - latest
       - *handbrake_version
-    build_args:
-      HANDBRAKE_GIT_TAG: *handbrake_version
+    build_args_from_env: 
+      - HANDBRAKE_GIT_TAG
     auto_labels: false
     platforms: linux/amd64
     dry_run: true
@@ -23,6 +25,8 @@ steps:
 
 - name: Build & publish
   image: woodpeckerci/plugin-docker-buildx
+  environment:
+    HANDBRAKE_GIT_TAG: *handbrake_version
   settings:
     username:
       from_secret: docker_username
@@ -32,6 +36,8 @@ steps:
     tags:
       - latest
       - *handbrake_version
+    build_args_from_env: 
+      - HANDBRAKE_GIT_TAG
     dry_run: false
     platforms: linux/amd64
   when:
