@@ -5,8 +5,6 @@ steps:
 # Just test build branches
 - name: Build
   image: woodpeckerci/plugin-docker-buildx
-  environment:
-    HANDBRAKE_GIT_TAG: *handbrake_version
   settings:
     repo: handspiker2/handbrake-transcode-job
     tags:
