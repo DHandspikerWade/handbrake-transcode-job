@@ -11,9 +11,8 @@ steps:
     repo: handspiker2/handbrake-transcode-job
     tags:
       - latest
-      - *handbrake_version
-    build_args_from_env: 
-      - HANDBRAKE_GIT_TAG
+      - 1.8.2
+    build_args: "HANDBRAKE_GIT_TAG=1.8.2"
     auto_labels: false
     platforms: linux/amd64
     dry_run: true
