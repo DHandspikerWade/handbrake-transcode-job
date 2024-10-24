@@ -22,8 +22,6 @@ steps:
 
 - name: Build & publish
   image: woodpeckerci/plugin-docker-buildx
-  environment:
-    HANDBRAKE_GIT_TAG: *handbrake_version
   settings:
     username:
       from_secret: docker_username
@@ -33,8 +31,7 @@ steps:
     tags:
       - latest
       - *handbrake_version
-    build_args_from_env: 
-      - HANDBRAKE_GIT_TAG
+    build_args: "HANDBRAKE_GIT_TAG=1.8.2"
     dry_run: false
     platforms: linux/amd64
   when:
