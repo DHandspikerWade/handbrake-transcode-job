@@ -1,5 +1,5 @@
 variables:
-  - &handbrake_version 1.9.0
+  - &handbrake_version 1.9.1
 
 steps:
 # Just test build branches
@@ -9,8 +9,8 @@ steps:
     repo: handspiker2/handbrake-transcode-job
     tags:
       - latest
-      - 1.8.2
-    build_args: "HANDBRAKE_GIT_TAG=1.9.0"
+      - *handbrake_version
+    build_args: "HANDBRAKE_GIT_TAG=1.9.1"
     auto_labels: false
     platforms: linux/amd64
     dry_run: true
@@ -31,7 +31,7 @@ steps:
     tags:
       - latest
       - *handbrake_version
-    build_args: "HANDBRAKE_GIT_TAG=1.9.0"
+    build_args: "HANDBRAKE_GIT_TAG=1.9.1"
     dry_run: false
     platforms: linux/amd64
   when:
