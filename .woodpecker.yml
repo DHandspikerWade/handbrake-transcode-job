@@ -4,7 +4,7 @@ variables:
 steps:
 # Just test build branches
 - name: Build
-  image: woodpeckerci/plugin-docker-buildx
+  image: woodpeckerci/plugin-docker-buildx:5
   settings:
     repo: handspiker2/handbrake-transcode-job
     tags:
@@ -21,7 +21,7 @@ steps:
     event: push
 
 - name: Build & publish
-  image: woodpeckerci/plugin-docker-buildx
+  image: woodpeckerci/plugin-docker-buildx:5
   settings:
     username:
       from_secret: docker_username
