@@ -1,4 +1,4 @@
-FROM debian:12-slim
+FROM debian:13-slim
 
 RUN \
     apt-get update -q \
@@ -45,7 +45,7 @@ RUN \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-ARG HANDBRAKE_GIT_TAG 'master'
+ARG HANDBRAKE_GIT_TAG='master'
 RUN \
     git clone --depth 1 https://github.com/HandBrake/HandBrake.git -b "$HANDBRAKE_GIT_TAG" /HandBrake \
     && cd /HandBrake \
