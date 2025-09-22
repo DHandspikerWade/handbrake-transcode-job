@@ -16,6 +16,11 @@ if [ -z "$OUTPUT_FILE" ]; then
     exit 1
 fi
 
+if [ -f "/output/$OUTPUT_FILE" ]; then
+    echo "$OUTPUT_FILE already exists"
+    exit 2
+fi
+
 # Allow presets to come from outside but still provide my usuals
 if [ ! -d /storage/presets ]; then
     echo "INFO: No presets provided. Downloading Devin's presets."
