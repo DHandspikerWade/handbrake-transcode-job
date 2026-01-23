@@ -39,3 +39,10 @@ echo "INFO: Creating /output/$output_path"
 mkdir -p /output/"$output_path"
 echo "INFO: Moving tempfile to /output/$OUTPUT_FILE"
 mv /storage/transcoding /output/"$OUTPUT_FILE"
+
+if [ -f "/input/${INPUT_FILE%.*}.nfo" ]; then
+    echo "INFO: Plex/Emby/Jellyfin NFO file found"
+    nfo_output_file="/output/${OUTPUT_FILE%.*}.nfo"
+    echo "INFO: Copying NFO to $nfo_output_file"
+    cp "/input/${INPUT_FILE%.*}.nfo" "$nfo_output_file"
+fi
