@@ -45,4 +45,5 @@ if [ -f "/input/${INPUT_FILE%.*}.nfo" ]; then
     nfo_output_file="/output/${OUTPUT_FILE%.*}.nfo"
     echo "INFO: Copying NFO to $nfo_output_file"
     cp "/input/${INPUT_FILE%.*}.nfo" "$nfo_output_file"
+    touch --no-create --reference="/output/$OUTPUT_FILE" "$nfo_output_file"
 fi
