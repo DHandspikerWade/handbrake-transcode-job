@@ -30,9 +30,18 @@ if [ ! -d /storage/presets ]; then
     rm -rf /tmp/presets
 fi
 
+if [ -f /hooks/pre-transcode ]; then
+    echo "INFO: Running pre-transcode hook" 
+    /hooks/pre-transcode
+fi
+
 echo "INFO: Starting Handbrake"
 HandBrakeCLI --preset-import-file  /storage/presets/*.json -Z "$PRESET_NAME" ${HANDBRAKE_ARGS:-""} -i "/input/$INPUT_FILE" -o /storage/transcoding
 
+if [ -f /hooks/pre-copy ]; then
+    echo "INFO: Running pre-copy hook" 
+    /hooks/pre-copy
+fi
 
 output_path=$(dirname "$OUTPUT_FILE")
 echo "INFO: Creating /output/$output_path"
@@ -46,4 +55,9 @@ if [ -f "/input/${INPUT_FILE%.*}.nfo" ]; then
     echo "INFO: Copying NFO to $nfo_output_file"
     cp "/input/${INPUT_FILE%.*}.nfo" "$nfo_output_file"
     touch --no-create --reference="/output/$OUTPUT_FILE" "$nfo_output_file"
+fi
+
+if [ -f /hooks/post-copy ]; then
+    echo "INFO: Running post-copy hook" 
+    /hooks/post-copy
 fi
