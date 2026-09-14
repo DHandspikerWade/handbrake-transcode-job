@@ -2,6 +2,7 @@ FROM debian:13-slim
 
 RUN \
     apt-get update -q \
+    && apt-get install -y auto-apt-proxy \
     && apt-get install -y \
         curl \
         appstream \
@@ -44,6 +45,13 @@ RUN \
         tar \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
+
+RUN \
+    apt-get update -q \
+    && apt-get install -y \
+        mkvtoolnix \
+        jq \
+    && rm -rf /var/lib/apt/lists/*  
 
 ARG HANDBRAKE_GIT_TAG='master'
 RUN \
