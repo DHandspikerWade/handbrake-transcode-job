@@ -1,43 +1,48 @@
 variables:
-  - &handbrake_version 1.11
+  - &handbrake_version "1.11.2"
 
 steps:
-# Just test build branches
-- name: Build
-  image: woodpeckerci/plugin-docker-buildx:5
-  settings:
-    repo: handspiker2/handbrake-transcode-job
-    tags:
-      - latest
-      - *handbrake_version
-    build_args: "HANDBRAKE_GIT_TAG=1.11.2"
-    auto_labels: false
-    platforms: 
-      - linux/amd64
-    dry_run: true
-  when:
-    branch:
-      exclude:
-      - main
-    event: push
+  - name: version
+    image: handspiker2/ci-tools:base
+    environment:
+      HANDBRAKE_VERSION: *handbrake_version
+    commands:
+      - echo "latest" > .tags
+      - echo "$${HANDBRAKE_VERSION%.*}" >> .tags
 
-- name: Build & publish
-  image: woodpeckerci/plugin-docker-buildx:5
-  settings:
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    repo: handspiker2/handbrake-transcode-job
-    tags:
-      - latest
-      - *handbrake_version
-    build_args: "HANDBRAKE_GIT_TAG=1.11.2"
-    dry_run: false
-    platforms: 
-      - linux/amd64
-      - linux/arm64
-  when:
-    branch:
-    - main
-    event: [push, manual]
+  - name: Build
+    image: woodpeckerci/plugin-docker-buildx:6
+    settings:
+      repo: handspiker2/handbrake-transcode-job
+      tags_file: .tags
+      build_args:
+        HANDBRAKE_GIT_TAG: *handbrake_version
+      auto_labels: false
+      platforms:
+        - linux/amd64
+      dry_run: true
+    when:
+      branch:
+        exclude:
+          - main
+      event: push
+
+  - name: Build & publish
+    image: woodpeckerci/plugin-docker-buildx:6
+    settings:
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      repo: handspiker2/handbrake-transcode-job
+      tags_file: .tags
+      build_args:
+        HANDBRAKE_GIT_TAG: *handbrake_version
+      dry_run: false
+      platforms:
+        - linux/amd64
+        - linux/arm64
+    when:
+      branch:
+        - main
+      event: [push, manual]
