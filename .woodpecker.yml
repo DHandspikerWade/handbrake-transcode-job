@@ -2,13 +2,15 @@ variables:
   - &handbrake_version "1.11.2"
 
 steps:
-  - name: version
+  - name: Create tags
     image: handspiker2/ci-tools:base
     environment:
       HANDBRAKE_VERSION: *handbrake_version
     commands:
       - echo "latest" > .tags
       - echo "$${HANDBRAKE_VERSION%.*}" >> .tags
+    when:
+      event: [push, manual]
 
   - name: Build
     image: woodpeckerci/plugin-docker-buildx:6
